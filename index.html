@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sultan Clicker</title>
+
+<style>
+body{
+    background:#111;
+    color:white;
+    font-family:Arial;
+    text-align:center;
+    padding:20px;
+}
+
+button{
+    padding:12px 20px;
+    margin:5px;
+    font-size:18px;
+}
+
+.box{
+    background:#222;
+    padding:15px;
+    margin:10px auto;
+    border-radius:10px;
+    max-width:500px;
+}
+</style>
+</head>
+<body>
+
+<h1>💰 SULTAN CLICKER 💰</h1>
+
+<h2>Duit: <span id="duit">0</span></h2>
+<h3>Rebirth: <span id="rebirth">0</span></h3>
+<h3>Pet: <span id="pet">Tidak Ada</span></h3>
+
+<button onclick="klik()">KLIK DUIT</button>
+
+<div class="box">
+<h2>Upgrade</h2>
+<p>Level: <span id="upgradeLevel">0</span></p>
+<p>Harga: <span id="upgradeHarga">50</span></p>
+<button onclick="upgrade()">Beli Upgrade</button>
+</div>
+
+<div class="box">
+<h2>Gacha Pet</h2>
+<p>Harga: 2000 Duit</p>
+<button onclick="gacha()">GACHA</button>
+</div>
+
+<div class="box">
+<h2>Rebirth</h2>
+<p>Butuh 100000 Duit</p>
+<button onclick="rebirthFunc()">REBIRTH</button>
+</div>
+
+<script>
+
+let duit = 0;
+let perKlik = 1;
+
+let upgradeLevel = 0;
+let upgradeHarga = 50;
+
+let rebirth = 0;
+
+let petNama = "Tidak Ada";
+let petMulti = 1;
+
+function update(){
+    document.getElementById("duit").innerText =
+    Math.floor(duit);
+
+    document.getElementById("upgradeLevel").innerText =
+    upgradeLevel;
+
+    document.getElementById("upgradeHarga").innerText =
+    upgradeHarga;
+
+    document.getElementById("rebirth").innerText =
+    rebirth;
+
+    document.getElementById("pet").innerText =
+    petNama;
+}
+
+function klik(){
+    duit += perKlik * petMulti;
+    update();
+}
+
+function upgrade(){
+
+    if(duit >= upgradeHarga){
+
+        duit -= upgradeHarga;
+
+        upgradeLevel++;
+
+        perKlik += 1;
+
+        upgradeHarga =
+        Math.floor(upgradeHarga * 1.8);
+
+        update();
+    }
+}
+
+function gacha(){
+
+    if(duit < 2000){
+        alert("Butuh 2000 Duit");
+        return;
+    }
+
+    duit -= 2000;
+
+    let r = Math.random()*100;
+
+    if(r <= 0.2){
+
+        petNama = "🤖 ChatGPT";
+        petMulti = 99999;
+
+        alert("LEGENDARY CHATGPT!");
+
+    }else if(r <= 50.2){
+
+        petNama = "🐶 Dog";
+        petMulti = 20;
+
+        alert("Dapat Dog!");
+
+    }else{
+
+        alert("💀 ZONK");
+    }
+
+    update();
+}
+
+function rebirthFunc(){
+
+    if(duit >= 100000){
+
+        rebirth++;
+
+        duit = 0;
+
+        perKlik = 1 + rebirth;
+
+        upgradeLevel = 0;
+
+        upgradeHarga = 50;
+
+        petNama = "Tidak Ada";
+        petMulti = 1;
+
+        update();
+
+    }else{
+
+        alert("Butuh 100000 Duit");
+    }
+}
+
+update();
+
+</script>
+
+</body>
+</html>
